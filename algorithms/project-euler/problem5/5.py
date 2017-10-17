@@ -1,16 +1,19 @@
-#In order for a number to be divided by all the numbers from 1 to 20 its enough to be divided by numbers from 11 to 20
-i=20
-found=False
-while found==False:
-    i=i+20
-    found=True
-    for j in range(11,20):
-        if i%j!=0:
-            found=False
-            break
-print(i)
+def gcd(a, b):
+    while b != 0:
+        t = b
+        b = a % b
+        a = t
+    return a
 
-    
-        
-    
-	
+def lcm(a, b):
+    return a * b / gcd(a, b)
+
+
+
+#main code
+n=11
+for i in range(12, 21):
+    n = lcm(n,i)
+print(n)
+ 
+
