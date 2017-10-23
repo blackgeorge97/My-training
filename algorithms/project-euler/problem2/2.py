@@ -5,5 +5,3 @@ while b < 4000000:
         sum += b
     a, b = b, a + b
 print(sum)
-
-
