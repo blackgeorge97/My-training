@@ -1,28 +1,14 @@
-def is_prime(n):
-    if n == 2 or n == 3: 
-        return True
-    if n < 2 or n % 2 == 0:  
-        return False
-    if n < 9: 
-        return True
-    if n % 3 == 0:  
-        return False
-    r = int(n ** 0.5)
-    f = 5
-    while f <= r:
-        if n % f == 0: 
-            return False
-        if n % (f + 2) == 0: 
-            return False
-        f += 6
-    return True 
-
-i = 0
-n = 1
-while i < 10001:
-    n += 1
-    if is_prime(n):
-        i += 1
-print(n)
-    
-             
+primes = [2]
+candidate = 3
+while len(primes) != 10001:
+    is_prime = True
+    for witness in primes:
+        if witness * witness > candidate:
+            break
+        if candidate % witness == 0:
+            is_prime = False           
+            break
+    if is_prime:
+        primes.append(candidate)
+    candidate += 1
+print(primes[10000])
