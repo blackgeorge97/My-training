@@ -13,11 +13,11 @@ visited_nodes = [0]
 while len(visited_nodes) < NODE_NUMBER:
     min = 1000000
     for node in visited_nodes:
-        for witness in range(0, 40):
-            if network_data[node][witness] != '-':
-                if witness not in visited_nodes and int(network_data[node][witness]) < min:
-                    min = int(network_data[node][witness])
-                    last_visited_node = witness
+        for candidate_node in range(0, 40):
+            if network_data[node][candidate_node] != '-':
+                if candidate_node not in visited_nodes and int(network_data[node][candidate_node]) < min:
+                    min = int(network_data[node][candidate_node])
+                    last_visited_node = candidate_node
     new_weight += min
     visited_nodes.append(last_visited_node)
 saving = total_weight - new_weight
