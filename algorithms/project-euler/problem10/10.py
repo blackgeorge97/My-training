@@ -1,25 +1,14 @@
-def is_prime(n):
-    if n == 2 or n == 3:
-        return True
-    if n < 2 or n % 2 == 0:
-        return False
-    if n < 9:
-        return True
-    if n % 3 == 0:
-        return False
-    r = int(n ** 0.5)
-    f = 5
-    while f <= r:
-        if n % f == 0:
-            return False
-        if n % (f + 2) == 0:
-            return False
-        f += 6
-    return True
-
-
-sum = 0
-for i in range(2, 2000000):
-    if is_prime(i):
-        sum += i
-print(sum)
+LIMIT = 2000000
+primes = [2]
+for candidate in range(3, LIMIT):
+    is_prime = True
+    for witness in primes:
+        if candidate % witness == 0:
+           is_prime = False
+           break
+        if witness * witness > candidate:
+           break
+    if is_prime:
+        primes.append(candidate)
+sum_of_primes = sum(primes)
+print(sum_of_primes)
