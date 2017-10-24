@@ -9,5 +9,3 @@ for a in range(1, 250):
     if found:
         break
 print(a, b, c, a*b*c) 
-        
-        
