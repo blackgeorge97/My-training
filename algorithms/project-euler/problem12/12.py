@@ -5,12 +5,14 @@ divisors = 1
 while divisors < LIMIT:
     triangle += natural
     natural += 1
-    divisors = 0
-    for i in range(1, triangle):
-        if triangle % i == 0:
-            divisors += 2
-        if i * i >= triangle:
-            if i * i == triangle:
-                divisors -= 1
-            break
+    divisors = 1
+    current_triangle = triangle
+    i = 2
+    while current_triangle != 1:
+        power = 0
+        while current_triangle % i == 0:
+            power += 1
+            current_triangle = current_triangle / i
+        divisors *= (power + 1)
+        i += 1
 print(triangle)
