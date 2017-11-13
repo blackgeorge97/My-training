@@ -1,6 +1,5 @@
 import pygame
-import random
-import time
+from random import randint
 
 BLACK = (0, 0, 0)
 GREY = (70, 70, 70)
@@ -13,15 +12,17 @@ HOR_BOXES = 50
 VER_BOXES = 50
 W_BOX = W / HOR_BOXES
 H_BOX = H / VER_BOXES
-SECS_MOVE = 0.1
+SPEED = 10
 STARTING_LENGTH = 5
- 
+MOVES = {'up' : [0, -1], 'down' : [0, 1], 'right' : [1, 0], 'left' : [-1, 0]}
+
+
 def create_apple(snake):
-    x_apple = random.randint(0, 49)
-    y_apple = random.randint(0, 49)
-    while [x_apple, y_apple] in snake:
-        x_apple = random.randint(0, 49)
-        y_apple = random.randint(0, 49)
+    while True:
+        x_apple = randint(0, HOR_BOXES - 1)
+        y_apple = randint(0, VER_BOXES - 1)
+        if [x_apple, y_apple] not in snake:
+            break
     apple = [x_apple, y_apple]
     return apple
 
@@ -35,7 +36,8 @@ pygame.init()
 
 size = (W, H)
 screen = pygame.display.set_mode(size)
- 
+with open('highscore.txt', 'r') as f:
+    highscore = int(f.read())
 pygame.display.set_caption("Snake Game")
 apple = [0.0]
 done = False
@@ -43,7 +45,6 @@ clock = pygame.time.Clock()
 game_over = True
 start = True
 snake = []
-highscore = 0
 game_over_font = pygame.font.SysFont(None, int(W / 8))
 score_font = pygame.font.SysFont(None, int(W / 12))
 while not done:
@@ -51,14 +52,14 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
         elif event.type == pygame.KEYDOWN:
-            if game_over == True:
+            if game_over:
                 game_over = False
                 start = False
                 beat_highscore = False
                 snake.clear()
                 head_dir = 'none'
-                head_x = random.randint(0, 49)
-                head_y = random.randint(0, 49)
+                head_x = randint(0, HOR_BOXES - 1)
+                head_y = randint(0, VER_BOXES - 1)
                 snake.append([head_x, head_y])
                 remaining_starting_boxes = STARTING_LENGTH - 1
                 apple = create_apple(snake)
@@ -71,20 +72,14 @@ while not done:
                     head_dir = 'right'
                 elif event.key == pygame.K_LEFT and head_dir != 'right':
                     head_dir = 'left' 
-    if game_over == False:
-        if head_dir == 'up':
-            snake.insert(0, [snake[0][0], snake[0][1] - 1])
-        elif head_dir == 'down':
-            snake.insert(0, [snake[0][0], snake[0][1] + 1])
-        elif head_dir == 'right':
-            snake.insert(0, [snake[0][0] + 1, snake[0][1]])
-        elif head_dir == 'left':
-            snake.insert(0, [snake[0][0] - 1, snake[0][1]])
+    if not game_over:
+        if head_dir != 'none':
+            snake.insert(0, [snake[0][0] + MOVES[head_dir][0], snake[0][1] + MOVES[head_dir][1]])
         if len(snake) > 1: 
             if snake[0] in snake[1:]:
                 game_over = True
-        if (snake[0][0] > 49 or snake[0][0] < 0 or 
-            snake[0][1] > 49 or snake[0][1] < 0):
+        if (snake[0][0] > HOR_BOXES or snake[0][0] < 0 or 
+            snake[0][1] > VER_BOXES or snake[0][1] < 0):
             game_over = True
         if head_dir != 'none':
             if snake[0] != apple and remaining_starting_boxes > 0:
@@ -93,14 +88,16 @@ while not done:
                 apple = create_apple(snake)
             else:
                 snake.pop(len(snake) - 1)    
-    if game_over == True:
+    if game_over:
         score = len(snake) - STARTING_LENGTH
+        if score < 0:
+            score = 0
         if score > highscore:
                 beat_highscore = True
                 highscore = score
 
     screen.fill(GREY)
-    if game_over == False:
+    if not game_over:
         draw_snake(snake)
         x_apple = apple[0] * W_BOX
         y_apple = apple[1] * H_BOX
@@ -108,20 +105,21 @@ while not done:
     else:
         if start:
             text = game_over_font.render("WELCOME", True, RED)
-            screen.blit(text, [int(W / 4), int(H / 4)])
         else:
             if beat_highscore:
                 text = game_over_font.render("New Highscore!", True, RED)
-                screen.blit(text, [int(W / 5), int(H / 5)])
             else:
                 text = game_over_font.render("Game Over", True, RED)
-                screen.blit(text, [int(W / 4), int(H / 4)])
             score_display = score_font.render("Score:" + str(score) + " Highscore:" + str(highscore), True, BLACK)
-            screen.blit(score_display, [int(W / 4.5), int(2 * H / 5)])
-        begin = score_font.render("Press an key to play!", True, BLACK)
-        screen.blit(begin, [int(W / 5), int(3 * H / 5)])
+            score_display_width = score_display.get_width()
+            screen.blit(score_display, [int(W / 2 - score_display_width / 2), int(2 * H / 5)])
+        text_width = text.get_width()
+        screen.blit(text, [int(W / 2 - text_width / 2), int(H / 4)])
+        begin = score_font.render("Press any key to play!", True, BLACK)
+        begin_width = begin.get_width()
+        screen.blit(begin, [int(W / 2 - begin_width / 2), int(3 * H / 5)])
     pygame.display.flip()
-    time.sleep(SECS_MOVE)
-    clock.tick(60)
-    
+    clock.tick(SPEED)
+with open('highscore.txt', 'w') as f:
+    f.write(str(highscore))
 pygame.quit()
