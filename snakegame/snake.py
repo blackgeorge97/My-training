@@ -78,8 +78,8 @@ while not done:
         if len(snake) > 1: 
             if snake[0] in snake[1:]:
                 game_over = True
-        if (snake[0][0] > HOR_BOXES or snake[0][0] < 0 or 
-            snake[0][1] > VER_BOXES or snake[0][1] < 0):
+        if (snake[0][0] > HOR_BOXES - 1 or snake[0][0] < 0 or 
+            snake[0][1] > VER_BOXES - 1 or snake[0][1] < 0):
             game_over = True
         if head_dir != 'none':
             if snake[0] != apple and remaining_starting_boxes > 0:
