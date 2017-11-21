@@ -2,7 +2,7 @@ import pygame
 from model import Game
 from render import init, draw_board
 
-SPEED = 4
+SPEED = 8
 INPUT = {pygame.K_UP: 'up', pygame.K_DOWN: 'down', pygame.K_RIGHT: 'right', pygame.K_LEFT: 'left'}
 
 screen = init()
@@ -10,6 +10,7 @@ done = False
 clock = pygame.time.Clock()
 direction = 'none'
 start = True
+move = False
 while not done:  
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -25,8 +26,12 @@ while not done:
         start = False
         tetris = Game() 
     else:
+        if move:
+            tetris.integrate()
+            move = False
+        else:
+            move = True
         tetris.move(direction)
-        tetris.integrate()
     draw_board(tetris, screen)
     pygame.display.flip()
     clock.tick(SPEED)
