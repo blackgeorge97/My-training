@@ -10,16 +10,10 @@ function integrate() {
     if (!ball.moving) {
         return
     }
-    if (!ball.stopY && ball.velocity.y + ball.radius <= 1) {
+    if (!ball.stopY) {
         ball.velocity.y += g * dt
     }
-    else if (ball.velocity.y >= 0) {
-        ball.stopY = true
-        ball.position.y = 1 - ball.radius
-        ball.velocity.y = 0
-    }
-    if (ball.velocity.y + ball.radius <= 1) {
-        ball.velocity.y += g * dt
+    if (ball.position.y + ball.radius >= 1) {
         if (ball.velocity.x > 0) {
             ball.velocity.x -= friction * dt
         }  
@@ -48,6 +42,11 @@ function integrate() {
     }
     else {
         ball.changeY = false 
+    }
+    if (ball.position.y > 1 && ball.velocity.y > 0) {
+        ball.velocity.y = 0
+        ball.position.y = 1 - ball.radius
+        ball.stopY = true
     }  
 }
 
