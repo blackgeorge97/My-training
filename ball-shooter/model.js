@@ -10,11 +10,11 @@ function integrate() {
     if (!ball.moving) {
         return
     }
-    if (!ball.changeY && ball.velocity.y + ball.radius <= 1) {
+    if (!ball.stopY && ball.velocity.y + ball.radius <= 1) {
         ball.velocity.y += g * dt
     }
     else if (ball.velocity.y >= 0) {
-        ball.changeY = true
+        ball.stopY = true
         ball.position.y = 1 - ball.radius
         ball.velocity.y = 0
     }
