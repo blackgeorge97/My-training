@@ -1,0 +1,119 @@
+body {
+    font-family: Trebuchet MS, arial, helvetica, serif;
+    border-color: #ccc;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding:0;
+    position: relative;
+    min-width: 900px;
+}
+h1 {
+    font-family: Georgia;
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px #ccc solid;
+    font-weight: normal;
+    letter-spacing: 1px;
+    font-size: 20px;
+}
+span {
+    font-size: 130%;
+    font-weight: bold;
+}
+.menu {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    margin: 10px 5px;
+    font-size: 15px;
+}
+.menu li {
+    display: inline;
+    font-weight: bold;
+}
+.menu a {
+    color: #00428f;
+    text-decoration: underline;
+    font-weight: normal; 
+}
+.contents {
+    float: left;
+    background-color: #eee;
+    list-style-type: none;
+    margin: 0 20px 5px 0;
+    padding: 10px 0 0 5px;
+    width: 350px;
+    height: 400px;
+    border: 1px #ccc solid;
+    font-size: 15px;
+    line-height: 22px;
+}
+.contents a {
+    color: #00428F;
+    text-decoration: none;
+}
+.sublist {
+    list-style-type: none;
+    padding: 0 0 0 10px;
+    margin: 0;
+}
+.selected {
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0 0 0 10px;
+    background-color: #ad2121;
+    border-top: 1px #790101 solid;
+    border-bottom: 1px #790101 solid;
+    font-style: italic;
+}
+.zengarden {
+    float: right;
+    background-color: #eee;
+    color: #333;
+    font-size: 14px;
+    margin: 30px 10px 0 20px;
+    padding: 5px;
+    border: 1px #ccc solid;
+    text-align: center;
+}
+.zengarden img {
+    width: 214px;
+    height: 154px;
+    display: block;
+}
+.zengarden p {
+    padding: 0;
+    margin: 0;
+}
+article {
+    font-size: 15px;
+}
+article h2 {
+    font-size: 160%;
+    font-weight: bold;
+}
+q:before {
+    content: none;
+}
+q:after {
+    content: none;
+}
+article q {
+    font-style: italic;
+    display: block;
+    margin: 16px 0 0 420px;
+}
+.sign {
+    position: absolute;
+    top: 470px;
+    clear: both;
+    width: 400px;
+    text-align: center;
+    border-top: 1px #ccc solid;
+    margin: 0 30%;
+    padding: 0;
+    color: #999;
+}
+.sign a {
+    color: #99c;
+}
